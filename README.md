@@ -8,13 +8,17 @@ Predict car insurance premiums for 11 insurers (A-K) given customer profiles (ag
 
 ## Architecture
 
-```
-Level-1:  LightGBM (Tweedie)  +  XGBoost (Tweedie)
-                    \                /
-Level-2:     Ridge Regression Meta-Learner
-                       |
-                  Final Prediction
-```
+### Pipeline Overview
+
+<p align="center">
+  <img src="eki_ensemble_pipeline_overview.svg" alt="EKI Ensemble Pipeline Overview" width="680"/>
+</p>
+
+### Training Loop Detail
+
+<p align="center">
+  <img src="eki_training_loop_detail.svg" alt="EKI Training Loop Detail" width="680"/>
+</p>
 
 Per-insurer models: each insurer gets its own independent pipeline (feature selection, training, meta-learner), since pricing strategies differ across insurers.
 
