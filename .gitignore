@@ -1,0 +1,16 @@
+# Ignore test_dis outputs and intermediate files
+/test_dis
+
+/venv
+/__pycache__
+*.pyc
+/catboost_info
+/.claude
+
+
+#folder submissions/ --- IGNORE ---
+#folder models/ --- IGNORE ---
+/models
+/new_models
+/submissions
+/testing_universability
