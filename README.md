@@ -1,5 +1,7 @@
 # Insurance Premium Prediction — Stacking Ensemble Pipeline
 
+> **Note:** The `ensemble_EKI` directory contains the code used to train our best predictions so far. Additionally, we implemented a **recency bias** in our models to give more weight to more recent training data, ensuring our models adapt better to the temporal shift in the test blocks.
+
 ## Problem
 
 Predict car insurance premiums for 11 insurers (A-K) given customer profiles (age, vehicle, location, coverage, deductible). Scored by **Pooled MAE** across all insurers and all valid quotes. Data is temporal: training = weeks 1-4, test block2 = week 5, test block3 = week 6.
@@ -82,12 +84,21 @@ Predictions are merged into existing submission CSVs by `quote_id` (not position
 
 After each insurer completes, predictions and the completed-insurer list are saved to Google Drive. If the Colab runtime disconnects, re-running the script automatically skips completed insurers and resumes from the next one.
 
-## Files
+## Project Structure
 
-| File | Purpose |
-|------|---------|
-| `colab_notebook.py` | Main pipeline — run on Colab with GPU |
-| `predict_one.py` | Quick train-set prediction for bias analysis |
+Our repository contains several key directories and scripts used throughout our experimentation pipeline:
+
+| Directory/File | Purpose |
+|----------------|---------|
+| `ensemble_EKI/` | **Code used to train our best predictions so far.** Contains scripts (`train.py`, `predict_one.py`, `merge_submissions.py`, etc.) for our top-performing stacking ensemble across all insurers. |
+| `src/` | General source code and modularized components (`preprocess.py`, `train.py`, `format_submission.py`) used in earlier tests. |
+| `models/` & `new_models/` | Saved models (e.g., `.cbm` CatBoost models) for individual insurers, including ensemble components. |
+| `test_dis/` | Scripts like `check_bias.py` used to test and validate whether our predictions suffer from systemic biases across different demographics or features. |
+| `testing_universability/` | Code for testing model generalization and generating cross-insurers evaluation matrices (`cross_mae_matrix.csv`). |
+| `submissions/` | Output directory containing formatted submission files (`submission_block2.csv`, `submission_block3.csv`, etc.). |
+| `data/` | Data assets (CSV/Parquet) for training and distinct data blocks (`block1_train`, `block2_test`, `block3_test`). |
+| `eval_ensemble.py` & `predict_combined.py` | Standalone operational scripts to quickly evaluate models and combine our stacked methodologies. |
+| `colab_notebook.py` | Main pipeline script — suitable to be run on Colab with GPU for heavy lifting. |
 
 ## How to Run
 
